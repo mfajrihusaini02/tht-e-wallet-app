@@ -35,37 +35,34 @@ class _SignupScreenState extends State<SignupScreen> {
             padding: const EdgeInsets.symmetric(vertical: 26),
             child: Column(
               children: [
-                Container(
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.fromLTRB(
-                    defaultMargin,
-                    0,
-                    defaultMargin,
-                    6,
-                  ),
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        SigninScreen.routeName,
-                        (route) => false,
-                      );
-                    },
-                    icon: const Icon(Icons.arrow_back_ios),
-                  ),
-                ),
-                Container(
-                  margin:
-                      EdgeInsets.fromLTRB(defaultMargin, 0, defaultMargin, 6),
-                  width: double.infinity,
-                  height: 60,
-                  child: Text('Register Account', style: kHeading5),
+                Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(
+                          defaultMargin, 0, defaultMargin, 6),
+                      child: Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                SigninScreen.routeName,
+                                (route) => false,
+                              );
+                            },
+                            icon: const Icon(Icons.arrow_back),
+                          ),
+                          const SizedBox(width: 20),
+                          Text('Register Account', style: kHeading5),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
                 Container(
                   width: double.infinity,
-                  margin:
-                      EdgeInsets.fromLTRB(defaultMargin, 0, defaultMargin, 6),
-                  child: const Text('First Name'),
+                  margin: EdgeInsets.fromLTRB(defaultMargin, defaultMargin, defaultMargin, 6),
+                  child: Text('First name', style: kSubtitle),
                 ),
                 Container(
                   width: double.infinity,
@@ -73,7 +70,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.black),
+                    border: Border.all(color: Colors.grey),
                   ),
                   child: TextField(
                     controller: firstNameController,
@@ -88,7 +85,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   width: double.infinity,
                   margin:
                       EdgeInsets.fromLTRB(defaultMargin, 16, defaultMargin, 6),
-                  child: const Text('Last Name'),
+                  child: Text('Last name', style: kSubtitle),
                 ),
                 Container(
                   width: double.infinity,
@@ -96,7 +93,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.black),
+                    border: Border.all(color: Colors.grey),
                   ),
                   child: TextField(
                     controller: lastNameController,
@@ -111,15 +108,16 @@ class _SignupScreenState extends State<SignupScreen> {
                   width: double.infinity,
                   margin:
                       EdgeInsets.fromLTRB(defaultMargin, 12, defaultMargin, 6),
-                  child: const Text('Email address'),
+                  child: Text('Email address', style: kSubtitle),
                 ),
                 Container(
                   width: double.infinity,
                   margin: EdgeInsets.symmetric(horizontal: defaultMargin),
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.black)),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.grey),
+                  ),
                   child: TextField(
                     controller: emailController,
                     decoration: const InputDecoration(
@@ -133,7 +131,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   width: double.infinity,
                   margin:
                       EdgeInsets.fromLTRB(defaultMargin, 12, defaultMargin, 6),
-                  child: const Text('Password'),
+                  child: Text('Password', style: kSubtitle),
                 ),
                 Container(
                   width: double.infinity,
@@ -141,7 +139,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.black),
+                    border: Border.all(color: Colors.grey),
                   ),
                   child: TextField(
                     obscureText: true,
@@ -180,7 +178,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                 );
 
                             UserState state = context.read<UserCubit>().state;
-                            print(state);
 
                             if (state is UserLoaded) {
                               Navigator.pushReplacementNamed(
@@ -195,7 +192,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   color: Colors.white,
                                 ),
                                 titleText: Text(
-                                  "Sign In Failed",
+                                  'Sign In Failed',
                                   style: GoogleFonts.poppins(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600,

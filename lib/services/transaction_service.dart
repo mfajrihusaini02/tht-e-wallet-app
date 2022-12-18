@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:nutech_app/common/constant.dart';
@@ -20,17 +22,16 @@ class TransactionService {
         "Authorization": "Bearer ${User.token}",
       },
     );
-    print(response.body);
 
     if (response.statusCode != 200) {
       return ApiReturnValue(message: 'Please try again');
     }
+    print('Get History => ${response.statusCode}');
 
     var data = jsonDecode(response.body);
 
     List<Transaction> transactions =
         (data['data'] as Iterable).map((e) => Transaction.fromJson(e)).toList();
-    print(transactions);
 
     return ApiReturnValue(value: transactions);
   }

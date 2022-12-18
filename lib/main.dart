@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:nutech_app/common/constant.dart';
 import 'package:nutech_app/cubit/balance_cubit.dart';
+import 'package:nutech_app/cubit/topup_cubit.dart';
 import 'package:nutech_app/cubit/transaction_cubit.dart';
+import 'package:nutech_app/cubit/transfer_cubit.dart';
 import 'package:nutech_app/cubit/user_cubit.dart';
 import 'package:nutech_app/screen/done_screen.dart';
 import 'package:nutech_app/screen/home_screen.dart';
@@ -21,11 +23,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   email = prefs.getString('email');
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => UserCubit()),
         BlocProvider(create: (_) => BalanceCubit()),
         BlocProvider(create: (_) => TransactionCubit()),
+        BlocProvider(create: (_) => TransferCubit()),
+        BlocProvider(create: (_) => TopupCubit()),
       ],
       child: GetMaterialApp(
         title: 'Nutech Wallet',

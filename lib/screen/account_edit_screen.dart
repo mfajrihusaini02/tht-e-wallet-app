@@ -124,7 +124,7 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
                               editLastNameController.text);
 
                           UserState state = context.read<UserCubit>().state;
-                          print(state);
+                          await context.read<UserCubit>().getUser();
 
                           if (state is UserLoaded) {
                             Navigator.pushReplacementNamed(

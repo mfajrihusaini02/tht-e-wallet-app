@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:nutech_app/common/constant.dart';
 import 'package:nutech_app/cubit/balance_cubit.dart';
 import 'package:nutech_app/cubit/user_cubit.dart';
@@ -19,7 +20,6 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  static const title = 'Account';
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -104,7 +104,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (_) =>
-                                                      AccountEditScreen()));
+                                                      const AccountEditScreen()));
                                         },
                                         child: Container(
                                           alignment: Alignment.center,
@@ -212,7 +212,16 @@ class _AccountScreenState extends State<AccountScreen> {
                           ),
                           const Text(' '),
                           Text(
-                            "\$ ${(context.read<BalanceCubit>().state as BalanceLoaded).balance!.balance ?? '0'}",
+                            NumberFormat.currency(
+                              symbol: 'Rp ',
+                              decimalDigits: 0,
+                              locale: 'in-IDR',
+                            ).format((context.read<BalanceCubit>().state
+                                        as BalanceLoaded)
+                                    .balance!
+                                    .balance ??
+                                '0'),
+                            // "\$ ${(context.read<BalanceCubit>().state as BalanceLoaded).balance!.balance ?? '0'}",
                             style: kHeading6.copyWith(color: Colors.green),
                           ),
                         ],

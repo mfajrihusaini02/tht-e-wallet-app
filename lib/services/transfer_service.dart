@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:nutech_app/common/constant.dart';
@@ -28,11 +30,11 @@ class TransferService {
     if (response.statusCode != 200) {
       return ApiReturnValue(message: 'Please try again');
     }
+    print('Post Transfer => ${response.statusCode}');
 
     var data = jsonDecode(response.body);
 
-    Transfer value = Transfer.fromJson(data['data']);
-    print(value.toString());
+    Transfer value = Transfer.fromJson(data);
 
     return ApiReturnValue(value: value);
   }

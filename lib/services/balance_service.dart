@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:nutech_app/common/constant.dart';
@@ -24,11 +26,11 @@ class BalanceService {
     if (response.statusCode != 200) {
       return ApiReturnValue(message: 'Please try again');
     }
+    print('Get Balance => ${response.statusCode}');
 
     var data = jsonDecode(response.body);
 
     Balance balance = Balance.fromJson(data['data']);
-    print(balance.toString());
 
     return ApiReturnValue(value: balance);
   }

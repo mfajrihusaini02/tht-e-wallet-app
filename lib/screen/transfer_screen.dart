@@ -1,5 +1,16 @@
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:nutech_app/common/constant.dart';
+import 'package:nutech_app/cubit/balance_cubit.dart';
+import 'package:nutech_app/cubit/transaction_cubit.dart';
+import 'package:nutech_app/cubit/transfer_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nutech_app/screen/main_screen.dart';
 
 class TransferScreen extends StatefulWidget {
   const TransferScreen({Key? key}) : super(key: key);
@@ -11,6 +22,11 @@ class TransferScreen extends StatefulWidget {
 
 class _TransferScreenState extends State<TransferScreen> {
   TextEditingController transferController = TextEditingController();
+  bool isLoading = false;
+
+  // String _formatNumber(String s) =>
+  //     NumberFormat.decimalPattern('en').format(int.parse(s));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +51,13 @@ class _TransferScreenState extends State<TransferScreen> {
                 child: TextField(
                   controller: transferController,
                   keyboardType: TextInputType.number,
+                  // onChanged: (s) {
+                  //   s = _formatNumber(s.replaceAll(',', ''));
+                  //   transferController.value = TextEditingValue(
+                  //     text: s,
+                  //     selection: TextSelection.collapsed(offset: s.length),
+                  //   );
+                  // },
                   decoration: InputDecoration(
                     helperText: '*Minimal \$50',
                     helperStyle: kSubtitle.copyWith(color: Colors.grey),
@@ -65,7 +88,78 @@ class _TransferScreenState extends State<TransferScreen> {
                   _card('\$4000'),
                   _card('\$5000'),
                 ],
-              )
+              ),
+              Container(
+                width: double.infinity,
+                height: 45,
+                margin: const EdgeInsets.only(top: 24),
+                child: isLoading
+                    ? const SpinKitFadingCircle(
+                        size: 45,
+                        color: Colors.blue,
+                      )
+                    : RaisedButton(
+                        onPressed: (transferController.text.isEmpty) ? null : () async {
+                          setState(() => isLoading = true);
+
+                          await context
+                              .read<TransferCubit>()
+                              .amountTransfer(transferController.text);
+
+                          TransferState state =
+                              context.read<TransferCubit>().state;
+                          await context.read<BalanceCubit>().getBalances();
+                          await context
+                              .read<TransactionCubit>()
+                              .getHistoryTransactions();
+
+                          if (state is TransferLoaded) {
+                            Navigator.pushReplacementNamed(
+                                context, MainScreen.routeName);
+                          } else {
+                            Get.snackbar(
+                              '',
+                              '',
+                              backgroundColor: Colors.red,
+                              icon: const Icon(
+                                Icons.sms_failed,
+                                color: Colors.white,
+                              ),
+                              titleText: Text(
+                                "Transfer Failed",
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              messageText: Text(
+                                (state as TransferLoadingFailed)
+                                    .message!
+                                    .toString()
+                                    .trim(),
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            );
+                            setState(() => isLoading = false);
+                          }
+                        },
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        color: Colors.blue,
+                        child: Text(
+                          'Transfer',
+                          style: GoogleFonts.poppins().copyWith(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+              ),
             ],
           ),
         ),

@@ -1,12 +1,11 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:nutech_app/common/constant.dart';
 import 'package:nutech_app/models/api_return_value.dart';
 import 'package:nutech_app/models/user.dart';
 import 'package:http/http.dart' as http;
-import 'package:nutech_app/screen/signin_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class UserService {
   // Sign In
@@ -31,6 +30,7 @@ class UserService {
     if (response.statusCode != 200) {
       return ApiReturnValue(message: 'Please try again');
     }
+    print('Post Signin => ${response.statusCode}');
 
     var data = jsonDecode(response.body);
 
@@ -65,76 +65,70 @@ class UserService {
     if (response.statusCode != 200) {
       return ApiReturnValue(message: 'Please try again');
     }
+    print('Post Signup => ${response.statusCode}');
 
     var data = json.decode(response.body);
 
     User value = User.fromJson(data['data']);
-    print(value.email);
-    print(value.firstName);
-    print(value.lastName);
 
     return ApiReturnValue(value: value);
   }
 
-  static Future<ApiReturnValue<User>> getUser({
-    http.Client? client,
-  }) async {
-    String url = '${baseUrl}getProfile';
+  // static Future<ApiReturnValue<User>> getUser({
+  //   http.Client? client,
+  // }) async {
+  //   String url = '${baseUrl}getProfile';
 
-    var response = await client!.get(
-      Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${User.token}',
-      },
-    );
+  //   var response = await client!.get(
+  //     Uri.parse(url),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'Bearer ${User.token}',
+  //     },
+  //   );
 
-    var data = json.decode(response.body);
-    User.token = data['data']['token'];
-    print(User.token);
+  //   var data = json.decode(response.body);
+  //   User.token = data['data']['token'];
+  //   print(User.token);
 
-    if (response.statusCode != 200) {
-      return ApiReturnValue(message: 'Please try again');
-    }
+  //   if (response.statusCode != 200) {
+  //     return ApiReturnValue(message: 'Please try again');
+  //   }
+  //   print('Get User => ${response.statusCode}');
 
-    User value = User.fromJson(data['data']);
-    print(value.email);
-    print(value.firstName);
-    print(value.lastName);
+  //   User value = User.fromJson(data['data']);
 
-    return ApiReturnValue(value: value);
-  }
+  //   return ApiReturnValue(value: value);
+  // }
 
-  static Future<ApiReturnValue<User>> updateUser(
-      String editFirstName, String editLastName,
-      {http.Client? client}) async {
-    String url = '${baseUrl}updateProfile';
+  // static Future<ApiReturnValue<User>> updateUser(
+  //     String editFirstName, String editLastName,
+  //     {http.Client? client}) async {
+  //   String url = '${baseUrl}updateProfile';
 
-    var response = await client!.post(
-      Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${User.token}',
-      },
-      body: jsonEncode(<String, String>{
-        'first_name': editFirstName,
-        'last_name': editLastName,
-      }),
-    );
+  //   var response = await client!.post(
+  //     Uri.parse(url),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'Bearer ${User.token}',
+  //     },
+  //     body: jsonEncode(<String, String>{
+  //       'first_name': editFirstName,
+  //       'last_name': editLastName,
+  //     }),
+  //   );
 
-    if (response.statusCode != 200) {
-      return ApiReturnValue(message: 'Please try again');
-    }
-    print(response.statusCode);
+  //   if (response.statusCode != 200) {
+  //     return ApiReturnValue(message: 'Please try again');
+  //   }
+  //   print('Post UpdateUser => ${response.statusCode}');
 
-    var data = json.decode(response.body);
+  //   var data = json.decode(response.body);
 
-    User value = User.fromJson(data['data']);
-    print(value.firstName);
-    print(value.lastName);
+  //   User value = User.fromJson(data['data']);
 
-    return ApiReturnValue(value: value);
-  }
+  //   return ApiReturnValue(value: value);
+  // }
 
   // Logout
   // static logOut() async {

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:nutech_app/common/constant.dart';
 import 'package:nutech_app/cubit/balance_cubit.dart';
 import 'package:nutech_app/cubit/user_cubit.dart';
@@ -164,12 +165,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       ),
                                       Text(
-                                        // "\$ ${NumberFormat.currency(
-                                        //   symbol: '',
-                                        //   decimalDigits: 0,
-                                        //   locale: 'en-US',
-                                        // ).format((context.read<BalanceCubit>().state as BalanceLoaded).balance!.balance ?? '0')}",
-                                        "\$ ${(context.read<BalanceCubit>().state as BalanceLoaded).balance!.balance ?? '0'}",
+                                        NumberFormat.currency(
+                                          symbol: 'Rp ',
+                                          decimalDigits: 0,
+                                          locale: 'in-IDR',
+                                        ).format((context.read<BalanceCubit>().state as BalanceLoaded).balance!.balance ?? '0'),
+                                        // "\$ ${(context.read<BalanceCubit>().state as BalanceLoaded).balance!.balance ?? '0'}",
                                         style: kHeading6.copyWith(
                                           color: kWhite,
                                         ),

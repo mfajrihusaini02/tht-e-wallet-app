@@ -28,6 +28,7 @@ class _SigninScreenState extends State<SigninScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.blue,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -48,7 +49,10 @@ class _SigninScreenState extends State<SigninScreen> {
                   width: double.infinity,
                   margin:
                       EdgeInsets.fromLTRB(defaultMargin, 0, defaultMargin, 6),
-                  child: const Text('Email address'),
+                  child: Text(
+                    'Email address',
+                    style: kSubtitle,
+                  ),
                 ),
                 Container(
                   width: double.infinity,
@@ -71,7 +75,10 @@ class _SigninScreenState extends State<SigninScreen> {
                   width: double.infinity,
                   margin:
                       EdgeInsets.fromLTRB(defaultMargin, 26, defaultMargin, 6),
-                  child: const Text('Password'),
+                  child: Text(
+                    'Password',
+                    style: kSubtitle,
+                  ),
                 ),
                 Container(
                   width: double.infinity,
@@ -112,19 +119,12 @@ class _SigninScreenState extends State<SigninScreen> {
                                 emailController.text, passwordController.text);
 
                             UserState state = context.read<UserCubit>().state;
-                            print(state);
                             await context.read<BalanceCubit>().getBalances();
                             await context
                                 .read<TransactionCubit>()
                                 .getHistoryTransactions();
 
                             if (state is UserLoaded) {
-                              // context.read<FoodCubit>().getFoods();
-                              // context.read<TransactionCubit>().getTransactions();
-                              // context.read<BalanceCubit>().getBalances();
-                              // context
-                              //     .read<TransactionCubit>()
-                              //     .getHistoryTransactions();
                               Navigator.pushReplacementNamed(
                                   context, MainScreen.routeName);
                             } else {
@@ -171,10 +171,29 @@ class _SigninScreenState extends State<SigninScreen> {
                           ),
                         ),
                 ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 1,
+                      width: 50,
+                      color: Colors.grey,
+                    ),
+                    const SizedBox(width: 15),
+                    Text('OR', style: kSubtitle.copyWith(color: Colors.grey)),
+                    const SizedBox(width: 15),
+                    Container(
+                      height: 1,
+                      width: 50,
+                      color: Colors.grey,
+                    ),
+                  ],
+                ),
                 Container(
                   width: double.infinity,
                   height: 45,
-                  margin: const EdgeInsets.only(top: 16),
+                  margin: const EdgeInsets.only(top: 10),
                   padding: EdgeInsets.symmetric(horizontal: defaultMargin),
                   child: isLoading
                       ? const SpinKitFadingCircle(
@@ -189,12 +208,16 @@ class _SigninScreenState extends State<SigninScreen> {
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
+                            side: const BorderSide(
+                              width: 1,
+                              color: Colors.blue,
+                            ),
                           ),
-                          color: Colors.grey,
+                          color: kWhite,
                           child: Text(
                             'Create new Account',
                             style: GoogleFonts.poppins().copyWith(
-                              color: Colors.white,
+                              color: Colors.blue,
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                             ),

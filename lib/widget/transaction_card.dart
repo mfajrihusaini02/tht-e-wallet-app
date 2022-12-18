@@ -39,10 +39,10 @@ class TransactionCard extends StatelessWidget {
                 style: kHeading6,
               ),
               Text(
-                "${(tr.type == TransactionType.topup) ? '+' : '-'} \$ ${NumberFormat.currency(
-                  symbol: '',
+                "${(tr.type == TransactionType.topup) ? '+' : '-'} ${NumberFormat.currency(
+                  symbol: 'Rp ',
                   decimalDigits: 0,
-                  locale: 'en-US',
+                  locale: 'in-IDR',
                 ).format(tr.amount)}",
                 style: kSubtitle.copyWith(
                   fontSize: 18,

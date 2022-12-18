@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:nutech_app/common/constant.dart';
@@ -27,11 +29,11 @@ class TopupService {
     if (response.statusCode != 200) {
       return ApiReturnValue(message: 'Please try again');
     }
+    print('Post Topup => ${response.statusCode}');
 
     var data = jsonDecode(response.body);
 
-    Topup value = Topup.fromJson(data['data']);
-    print(value.toString());
+    Topup value = Topup.fromJson(data);
 
     return ApiReturnValue(value: value);
   }

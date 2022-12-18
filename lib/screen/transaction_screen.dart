@@ -27,34 +27,36 @@ class _TransactionScreenState extends State<TransactionScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
-          physics: const NeverScrollableScrollPhysics(),
           child: Stack(
             children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: defaultMargin),
-                width: MediaQuery.of(context).size.width,
-                height: 280,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(50),
-                    bottomRight: Radius.circular(50),
+              SingleChildScrollView(
+                physics: const NeverScrollableScrollPhysics(),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: defaultMargin),
+                  width: MediaQuery.of(context).size.width,
+                  height: 280,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(50),
+                      bottomRight: Radius.circular(50),
+                    ),
+                    color: Colors.blue,
                   ),
-                  color: Colors.blue,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: SafeArea(
-                    child: Stack(
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              'History transaction',
-                              style: kHeading5.copyWith(color: kWhite),
-                            ),
-                          ],
-                        ),
-                      ],
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: SafeArea(
+                      child: Stack(
+                        children: [
+                          Column(
+                            children: [
+                              Text(
+                                'History transaction',
+                                style: kHeading5.copyWith(color: kWhite),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -91,8 +93,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                             ],
                           );
                         } else {
-                          return Center(
-                            child: Text(state.toString()),
+                          return const Center(
+                            child: Text('Empty'),
                           );
                         }
                       },
